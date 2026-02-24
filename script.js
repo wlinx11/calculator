@@ -1,6 +1,8 @@
 const numbers = document.querySelectorAll("button.number");
 const operators = document.querySelectorAll("button.operator");
+const decimal = document.getElementById("decimal");
 const result = document.getElementById("result");
+const AC = document.getElementById("AC");
 const display = document.getElementById("display");
 
 let a=0;
@@ -48,10 +50,17 @@ function operate(a,b,o){
 
 operators.forEach(operator =>{
   operator.addEventListener("click", (e)=>{
+
+    if(isSecondNumber === false){
     isSecondNumber = true;
     operation = e.target.innerHTML;
     console.log(`Operator: ${operation}`);
-  })
+  }
+  
+  else if(isSecondNumber === true){
+      display.innerHTML = operate(a,b,operation);
+  }
+})
 })
 
 numbers.forEach(number =>{
@@ -73,6 +82,27 @@ number.addEventListener("click", (e) =>{
   });
 });
 
+decimal.addEventListener("click", (e)=>{
+  if(isSecondNumber === false){
+    a = a+".";
+  }
+  else if(isSecondNumber === true){
+    b = b+".";
+  }
+});
+
 result.addEventListener("click", () =>{
   display.innerHTML = operate(a,b,operation);
+  a = 0;
+  b = 0;
+  operation = "";
+  isSecondNumber = false;
+});
+
+AC.addEventListener("click", ()=>{
+  display.innerHTML = 0;
+  a=0;
+  b=0;
+  operation = "";
+  isSecondNumber = false;
 })
