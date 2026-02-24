@@ -1,46 +1,78 @@
+const numbers = document.querySelectorAll("button.number");
+const operators = document.querySelectorAll("button.operator");
+const result = document.getElementById("result");
+const display = document.getElementById("display");
+
 let a=0;
 let b=0;
-let operator;
+let operation;
+let isSecondNumber=false;
+
 
 function add(a,b){
-  return console.log(a+b);
+  console.log(a+b);
+  return a+b;
 };
 
 function subtract(a,b){
-  return console.log(a-b);
+  console.log(a-b);
+  return a-b;
 };
 
 function multiply(a,b){
-  return console.log(a*b);
+  console.log(a*b);
+  return a*b;
 };
 
 function divide(a,b){
-  return console.log(a/b);
+  console.log(a/b);
+  return a/b;
 };
 
 function operate(a,b,o){
   if(o == "+"){
-    add(a,b);
+    return add(a,b);
   }
   else if(o == "-"){
-    subtract(a,b);
+    return subtract(a,b);
   }
   else if(o == "*"){
-    multiply(a,b);
+    return multiply(a,b);
   }
   else if(o == "/"){
-    divide(a,b);
+    return divide(a,b);
   }
   else console.log("Please select a basic operator");
 }
 
-const buttons = document.querySelectorAll("button.number");
-const display = document.getElementById("display");
 
-buttons.forEach(button =>{
-button.addEventListener("click", (e) =>{
-  a = e.target.innerHTML;
+operators.forEach(operator =>{
+  operator.addEventListener("click", (e)=>{
+    isSecondNumber = true;
+    operation = e.target.innerHTML;
+    console.log(`Operator: ${operation}`);
+  })
+})
+
+numbers.forEach(number =>{
+number.addEventListener("click", (e) =>{
+  if(isSecondNumber === false){
+  a = a+e.target.innerHTML-0;
   display.innerHTML = a;
-  console.log(a);
+  console.log(isSecondNumber);
+  console.log(`a: `+a);
+  }
+  
+  else if(isSecondNumber === true){
+  b = b+e.target.innerHTML-0;
+  display.innerHTML = b;
+  console.log(isSecondNumber);
+  console.log(`b: `+b);
+  
+  }
   });
 });
+
+result.addEventListener("click", () =>{
+  display.innerHTML = operate(a,b,operation);
+})
